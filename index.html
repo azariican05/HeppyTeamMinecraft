@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heppy | Professional Minecraft Team</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00a8ff;
+            --secondary: #00ffaa;
+            --dark: #0f1a20;
+            --light: #b1c1c1;
+            --accent: #ffcc00;
+            --minecraft: #5dbb46;
+            --title-green: #2ecc71;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-blur: blur(8px);
+            --red-transparent: rgba(231, 76, 60, 0.1);
+            --blue-transparent: rgba(52, 152, 219, 0.1);
+            --yellow-transparent: rgba(241, 196, 15, 0.1);
+            --green-transparent: rgba(46, 204, 113, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark), #1a2a40);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(0, 168, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 255, 170, 0.15) 0%, transparent 50%);
+        }
+        
+        /* Untuk teks hitam di dashboard */
+#main-content:not(footer),
+#main-content:not(footer) .card,
+#main-content:not(footer) .member-info h4,
+#main-content:not(footer) .member-info p,
+#main-content:not(footer) .about-team p,
+#main-content:not(footer) .achievement-card h4,
+#main-content:not(footer) .achievement-card p,
+#main-content:not(footer) .result-details p,
+#main-content:not(footer) .enrollment-schedule h5,
+#main-content:not(footer) .enrollment-schedule p {
+    font-weight: bold;
+    color: black !important;
+}
+        
+        /* Text color on initial page to green */
+        #login-first {
+            color: #2ecc71;
+        }
+        
+        /* Login form text to white */
+        .modal .form-control,
+        .modal label,
+        .remember-me label {
+            color: white !important;
+        }
+        
+        /* Dashboard text to black except footer */
+        #main-content:not(footer) {
+            color: black;
+        }
+        
+        /* Text in cards */
+        .card,
+        .member-info h4,
+        .member-info p,
+        .about-team p,
+        .achievement-card h4,
+        .achievement-card p,
+        .result-details p,
+        .enrollment-schedule h5,
+        .enrollment-schedule p {
+            color: black !important;
+        }
+
+        /* Footer remains original color */
+        footer {
+            color: #b1c1c1;
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        header {
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(15, 26, 32, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--title-green), #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            font-family: 'Minecraft', sans-serif;
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--title-green), #27ae60);
+            transition: 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--title-green), #27ae60);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--light);
+        }
+        
+        .btn-outline:hover {
+            background: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-logout {
+            background: transparent;
+            color: var(--light);
+            border: none;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+        
+        .btn-logout:hover {
+            color: var(--accent);
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--light);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: 0.3s;
+            backdrop-filter: var(--card-blur);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--title-green);
+            background: rgba(46, 204, 113, 0.1);
+            box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.2);
+        }
+
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: var(--card-blur);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Achievement Card Colors */
+        .achievement-card.community {
+            background: var(--red-transparent);
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .achievement-card.builds {
+            background: var(--blue-transparent);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+
+        .achievement-card.tournaments {
+            background: var(--yellow-transparent);
+            border-color: rgba(241, 196, 15, 0.3);
+        }
+
+        .achievement-card.team {
+            background: var(--green-transparent);
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+
+        .hero {
+            padding: 10rem 5% 5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--title-green), #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            font-family: 'Minecraft', sans-serif;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .games {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .game-icon {
+            width: 360px;
+            height: 360px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .game-icon:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-icon img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        section {
+            padding: 5rem 5%;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title h3 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--title-green), #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Minecraft', sans-serif;
+        }
+        
+        .section-title p {
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.8;
+        }
+        
+        .about-team {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+        
+        .about-team p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .member-card:nth-child(1) {
+            background: rgba(46, 204, 113, 0.1); /* Green */
+            border-color: rgba(46, 204, 113, 0.3);
+        }
+        
+        .member-card:nth-child(2) {
+            background: rgba(52, 152, 219, 0.1); /* Blue */
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+        
+        .member-card:nth-child(3) {
+            background: rgba(155, 89, 182, 0.1); /* Purple */
+            border-color: rgba(155, 89, 182, 0.3);
+        }
+        
+        .member-card:nth-child(4) {
+            background: rgba(241, 196, 15, 0.1); /* Yellow */
+            border-color: rgba(241, 196, 15, 0.3);
+        }
+        
+        .member-card:nth-child(5) {
+            background: rgba(231, 76, 60, 0.1); /* Red */
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+        
+        .member-card:nth-child(6) {
+            background: rgba(26, 188, 156, 0.1); /* Teal */
+            border-color: rgba(26, 188, 156, 0.3);
+        }
+
+        .member-info h4,
+        .member-info p,
+        .about-team p,
+        .achievement-card h4,
+        .achievement-card p,
+        .result-details p,
+        .enrollment-schedule h5,
+        .enrollment-schedule p {
+            color: #e0e0e0; /* Light gray for better contrast */
+        }
+        
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(46, 204, 113, 0.5);
+        }
+        
+        .member-image {
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+        
+        .member-card:hover .member-image img {
+            transform: scale(1.1);
+        }
+        
+        .member-info {
+            padding: 1.5rem;
+        }
+        
+        .member-info h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+        
+        .member-info p {
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+        
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .achievement-card {
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: 0.3s;
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .achievement-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .achievement-card p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Updated Results Table */
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: var(--card-blur);
+        }
+
+        .results-table th, .results-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .results-table th {
+            background: rgba(46, 204, 113, 0.2);
+            font-weight: 600;
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tr:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .status.accepted {
+            background: rgba(0, 255, 170, 0.2);
+            color: var(--secondary);
+        }
+        
+        .status.rejected {
+            background: rgba(255, 0, 85, 0.2);
+            color: #ff0055;
+        }
+        
+        .status.pending {
+            background: rgba(255, 255, 0, 0.2);
+            color: #ffff00;
+        }
+
+        /* Private Results Check Section */
+        .check-results-section {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: var(--card-blur);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Private Results Display */
+        .private-results {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: var(--card-blur);
+        }
+
+        .private-results h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--title-green);
+        }
+
+        .private-results p {
+            margin-bottom: 1rem;
+        }
+
+        .result-details {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-details p {
+            margin-bottom: 0.8rem;
+        }
+
+        .result-details strong {
+            color: var(--accent);
+        }
+
+        .enrollment-schedule {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--title-green);
+        }
+
+        .enrollment-schedule h5 {
+            color: var(--title-green);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: rgba(15, 26, 32, 0.8);
+            padding: 3rem 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--title-green), #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Minecraft', sans-serif;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: var(--light);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--light);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: linear-gradient(45deg, var(--title-green), #27ae60);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+            backdrop-filter: var(--card-blur);
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--light);
+            transition: 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+        }
+        
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            background: linear-gradient(to right, var(--title-green), #27ae60);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Minecraft', sans-serif;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom: 3px solid var(--title-green);
+            color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--light);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .remember-me input[type="checkbox"]:checked {
+            background-color: var(--title-green);
+            border-color: var(--title-green);
+        }
+
+        .remember-me input[type="checkbox"]:checked::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Login First Section */
+        .login-first {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+            padding: 10rem 5% 5rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            header {
+                padding: 1rem 5%;
+            }
+            
+            .hero h2 {
+                font-size: 2.8rem;
+            }
+            
+            .team-members {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 26, 32, 0.95);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            nav.active {
+                display: flex;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .section-title h3 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 8rem 5% 5rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .achievements {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Minecraft Font */
+        @font-face {
+            font-family: 'Minecraft';
+            src: url('https://assets.codepen.io/21542/MinecraftTen-VGORe.ttf') format('truetype');
+        }
+    </style>
+</head>
+<body>
+    <!-- Particles Background -->
+    <div class="particles" id="particles-js"></div>
+
+    <!-- Login First Section (Default Visible) -->
+    <div class="login-first" id="login-first">
+        <div class="logo">
+            <h1>Heppy</h1>
+            
+        </div>
+        <p>-</p>
+        <h2>Welcome to Heppy Minecraft Team</h2>
+        <p>-</p>
+        <p>Please login or sign up to access our community and team information.</p>
+        <p>↓</p>
+        
+        <div class="hero-buttons">
+            <button class="btn btn-outline" id="signin-btn-first">Sign Up</button>
+            <button class="btn btn-primary" id="login-btn-first">Log In</button>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden by Default) -->
+    <div id="main-content" style="display: none;">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <h1>Heppy</h1>
+            </div>
+            
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#team">Our Team</a></li>
+                    <li><a href="#achievements">Our Journey</a></li>
+                    <li><a href="#results">Results</a></li>
+                </ul>
+            </nav>
+            
+            <div class="auth-buttons" id="auth-buttons">
+                <button class="btn btn-logout" id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <h2>Build and Conquer with Heppy</h2>
+            <p>We are a professional Minecraft team dedicated to excellence in building, PvP, and competitive events.</p>
+            
+            <div class="hero-buttons">
+                <a href="https://surveyheart.com/form/67e732e9667ca62143537e81" class="btn btn-primary">Join Our Team</a>
+            </div>
+            
+            <div class="games">
+                <div class="game-icon">
+                    <img src="file:///storage/emulated/0/Android/data/com.teejay.trebedit/files/TrebEdit user files/LogoHeppy.jpg" alt="Minecraft">
+                </div>
+            </div>
+            
+            <div class="scroll-down">
+                <i class="fas fa-chevron-down fa-2x"></i>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-title">
+                <h3>About Our Team</h3>
+                <p>Learn more about our history and what makes us unique</p>
+            </div>
+            
+            <div class="about-team card">
+                <p>Heppy Minecraft Team was founded in 2018 by a group of passionate Minecraft players who wanted to take their skills to the next level. What started as a small group of friends has grown into one of the most respected competitive Minecraft teams in the world.</p>
+                
+                <p>Our team specializes in three main areas: competitive PvP tournaments, large-scale collaborative builds, and technical redstone creations. We've won multiple championships in each of these categories and continue to push the boundaries of what's possible in Minecraft.</p>
+                
+                <p>What sets us apart is our commitment to teamwork and continuous improvement. Every member of Heppy brings unique skills to the table, and we work together to help each other grow.</p>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team">
+            <div class="section-title">
+                <h3>Meet Our Builders</h3>
+                <p>Our roster consists of the most talented and dedicated Minecraft players.</p>
+            </div>
+            
+            <div class="team-members">
+                <!-- Player 1 -->
+                <div class="member-card card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Player 1">
+                    </div>
+                    <div class="member-info">
+                        <h4>HappyBuilder</h4>
+                        <p>Team Captain | Master Builder</p>
+                    </div>
+                </div>
+                
+                <!-- Player 2 -->
+                <div class="member-card card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Player 2">
+                    </div>
+                    <div class="member-info">
+                        <h4>RedstonePro</h4>
+                        <p>Redstone Engineer | Technical Lead</p>
+                    </div>
+                </div>
+                
+                <!-- Player 3 -->
+                <div class="member-card card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Player 3">
+                    </div>
+                    <div class="member-info">
+                        <h4>PvPKing</h4>
+                        <p>PvP Specialist | Combat Trainer</p>
+                    </div>
+                </div>
+                
+                <!-- Player 4 -->
+                <div class="member-card card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Player 4">
+                    </div>
+                    <div class="member-info">
+                        <h4>SpeedRunner</h4>
+                        <p>Speedrunner | World Record Holder</p>
+                    </div>
+                </div>
+                
+                <!-- Player 5 -->
+                <div class="member-card card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Player 5">
+                    </div>
+                    <div class="member-info">
+                        <h4>PixelArtist</h4>
+                        <p>Texture Artist | Pixel Perfectionist</p>
+                    </div>
+                </div>
+                
+                <!-- Coach -->
+                <div class="member-card card">
+                    <div class="member-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Coach">
+                    </div>
+                    <div class="member-info">
+                        <h4>NotchJr</h4>
+                        <p>Head Coach | Strategic Mind</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements">
+            <div class="section-title">
+                <h3>Our Journey</h3>
+                <p>We're building our legacy in the Minecraft community.</p>
+            </div>
+            
+            <div class="achievements">
+                <div class="achievement-card community">
+                    <div class="achievement-icon" style="color: #e74c3c;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Growing Community</h4>
+                    <p>100+ active members and growing</p>
+                </div>
+                
+                <div class="achievement-card builds">
+                    <div class="achievement-icon" style="color: #3498db;">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <h4>Impressive Builds</h4>
+                    <p>Featured on multiple Minecraft showcases</p>
+                </div>
+                
+                <div class="achievement-card tournaments">
+                    <div class="achievement-icon" style="color: #f1c40f;">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h4>Local Tournaments</h4>
+                    <p>Multiple wins in regional competitions</p>
+                </div>
+                
+                <div class="achievement-card team">
+                    <div class="achievement-icon" style="color: #2ecc71;">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>Dedicated Team</h4>
+                    <p>Consistent practice and improvement</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="selection-results">
+            <div class="section-title">
+                <h3>Tryout Results</h3>
+                <p>Check the status of your application for our team tryouts.</p>
+            </div>
+            
+            <!-- Private Results Check Section -->
+            <div class="check-results-section">
+                <h4>Check Your Personal Results</h4>
+                <form id="results-form">
+                    <div class="form-group">
+                        <label for="participant-id">Nomor Peserta</label>
+                        <input type="text" id="participant-id" class="form-control" placeholder="xxxxxx-xx-xxxxx" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Check Results</button>
+                </form>
+            </div>
+            
+            <!-- Public Results Table -->
+            <div class="card">
+                <h4 style="margin-bottom: 1rem;">Public Results</h4>
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HappyBuilder</td>
+                            <td><span class="status accepted">Diterima</span></td>
+                        </tr>
+                        <tr>
+                            <td>PvPNewbie</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                        <tr>
+                            <td>RedstoneFan</td>
+                            <td><span class="status rejected">Ditolak</span></td>
+                        </tr>
+                        <tr>
+                            <td>SpeedRunner99</td>
+                            <td><span class="status accepted">Diterima</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Private Results Display -->
+            <div class="private-results" id="private-results-display" style="display: none;">
+                <h4 id="result-message"></h4>
+                <div class="result-details">
+                    <div id="result-details"></div>
+                    <div class="enrollment-schedule" id="enrollment-schedule" style="display: none;">
+                        <h5>Jadwal Daftar Ulang:</h5>
+                        <p><strong>Tanggal:</strong> 15 - 20 Juli 2025</p>
+                        <p><strong>Waktu:</strong> 09:00 - 17:00 WIB</p>
+                        <p><strong>Tempat:</strong> Discord Heppy Team</p>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <a href="https://discord.gg/heppymc" class="btn btn-primary" target="_blank" style="flex: 1; text-align: center;">
+                        <i class="fab fa-discord"></i> Join Discord
+                    </a>
+                    <a href="https://surveyheart.com/form/67e732e9667ca62143537e81" class="btn btn-primary" target="_blank" style="flex: 1; text-align: center;">
+                        <i class="fas fa-clipboard-check"></i> Daftar Ulang
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>Heppy</h4>
+                    <p>Professional Minecraft team competing at the highest level of building and PvP.</p> <p>-</p>
+                    <h4>Social</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#team">Our Team</a></li>
+                        <li><a href="#achievements">Our Journey</a></li>
+                        <li><a href="#results">Results</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><a href="https://wa.me/6287777397188" target="_blank"><i class="fab fa-whatsapp"></i> Operator</a></li>
+                        <li><a href="#" id="contact-ig"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#" id="contact-yt"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li><a href="#" id="contact-discord"><i class="fab fa-discord"></i> Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Heppy Minecraft Team. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Welcome to Heppy</h3>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="login">Login</div>
+                <div class="tab" data-tab="signup">Sign Up</div>
+            </div>
+            
+            <div class="tab-content active" id="login-tab">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username">Minecraft Username</label>
+                        <input type="text" id="login-username" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" required>
+                    </div>
+                    
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Ingat Saya</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
+                </form>
+            </div>
+            
+            <div class="tab-content" id="signup-tab">
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-username">Minecraft Username</label>
+                        <input type="text" id="signup-username" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" class="form-control" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#5dbb46"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#5dbb46",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // User management
+        const users = JSON.parse(localStorage.getItem('heppyUsers')) || [];
+        let currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+
+        // Check if user is already logged in
+        if (currentUser) {
+            document.getElementById('login-first').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            updateAuthButtons();
+        }
+
+        // Modal functionality
+        const loginModal = document.getElementById('login-modal');
+        const loginBtnFirst = document.getElementById('login-btn-first');
+        const signinBtnFirst = document.getElementById('signin-btn-first');
+        const closeModal = document.querySelector('.close-modal');
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const loginFirstSection = document.getElementById('login-first');
+        const mainContent = document.getElementById('main-content');
+        const logoutBtn = document.getElementById('logout-btn');
+        const authButtons = document.getElementById('auth-buttons');
+        const resultsForm = document.getElementById('results-form');
+        const privateResultsDisplay = document.getElementById('private-results-display');
+        const resultMessage = document.getElementById('result-message');
+        const resultDetails = document.getElementById('result-details');
+        const enrollmentSchedule = document.getElementById('enrollment-schedule');
+
+        // Show login modal from first screen
+        loginBtnFirst.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Show sign up modal from first screen
+        signinBtnFirst.addEventListener('click', () => {
+            loginModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            // Switch to sign up tab
+            tabs[0].classList.remove('active');
+            tabs[1].classList.add('active');
+            tabContents[0].classList.remove('active');
+            tabContents[1].classList.add('active');
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            loginModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        // Click outside modal to close
+        window.addEventListener('click', (e) => {
+            if (e.target === loginModal) {
+                loginModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Tab switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Handle Sign Up
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('signup-username').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm').value;
+            
+            // Validasi
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (users.some(user => user.username === username)) {
+                alert('Username already exists!');
+                return;
+            }
+            
+            if (users.some(user => user.email === email)) {
+                alert('Email already registered!');
+                return;
+            }
+            
+            // Tambahkan user baru
+            const newUser = {
+                username,
+                email,
+                password // Note: Dalam produksi, password HARUS di-hash
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('heppyUsers', JSON.stringify(users));
+            alert('Account created successfully! Please login.');
+            
+            // Switch ke tab login
+            tabs[0].classList.remove('active');
+            tabs[1].classList.remove('active');
+            tabContents[0].classList.remove('active');
+            tabContents[1].classList.remove('active');
+            
+            document.querySelector('[data-tab="login"]').classList.add('active');
+            document.getElementById('login-tab').classList.add('active');
+            
+            // Isi form login
+            document.getElementById('login-username').value = username;
+            document.getElementById('login-password').value = password;
+        });
+        
+        // Handle Login
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            // Cari user
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                // Login berhasil
+                alert('Login successful! Welcome back ' + username);
+                
+                // Simpan session
+                currentUser = user;
+                sessionStorage.setItem('currentUser', JSON.stringify(user));
+                
+                // Jika remember me dicentang, simpan username dan password
+                if (rememberMe) {
+                    localStorage.setItem('rememberedUser', JSON.stringify({
+                        username: username,
+                        password: password
+                    }));
+                } else {
+                    localStorage.removeItem('rememberedUser');
+                }
+                
+                // Redirect atau tampilkan konten
+                loginFirstSection.style.display = 'none';
+                mainContent.style.display = 'block';
+                loginModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                // Update auth buttons
+                updateAuthButtons();
+            } else {
+                alert('Invalid username or password!');
+            }
+        });
+
+        // Handle Logout
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('currentUser');
+            currentUser = null;
+            mainContent.style.display = 'none';
+            loginFirstSection.style.display = 'flex';
+            updateAuthButtons();
+        });
+
+        // Update authentication buttons based on login state
+        function updateAuthButtons() {
+            if (currentUser) {
+                authButtons.innerHTML = `
+                    <button class="btn btn-logout" id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    sessionStorage.removeItem('currentUser');
+                    currentUser = null;
+                    mainContent.style.display = 'none';
+                    loginFirstSection.style.display = 'flex';
+                    updateAuthButtons();
+                });
+            } else {
+                authButtons.innerHTML = `
+                    <button class="btn btn-outline" id="signin-btn">Sign Up</button>
+                    <button class="btn btn-primary" id="login-btn">Log In</button>
+                `;
+                
+                // Add event listeners to new buttons
+                document.getElementById('login-btn').addEventListener('click', () => {
+                    loginModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                document.getElementById('signin-btn').addEventListener('click', () => {
+                    loginModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    // Switch to sign up tab
+                    tabs[0].classList.remove('active');
+                    tabs[1].classList.add('active');
+                    tabContents[0].classList.remove('active');
+                    tabContents[1].classList.add('active');
+                });
+            }
+        }
+        
+        // Handle results form submission
+        resultsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const participantId = document.getElementById('participant-id').value;
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Reset button
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+                
+                // Show results (simulated)
+                showPrivateResults(participantId);
+            }, 1500);
+        });
+        
+        // Show private results
+        function showPrivateResults(participantId) {
+            // Simulate different results based on participant ID
+            let accepted = false;
+            let message = '';
+            let details = '';
+            
+            if (participantId === '012025-01-00102') {
+                accepted = true;
+                message = 'Selamat! Anda diterima di Tim Heppy!';
+                details = `
+                    <p><strong>Username Minecraft:</strong> PiggyBabby</p>
+                    <p><strong>Nomor Peserta:</strong> 012025-01-00102</p>
+                    <p><strong>Umur:</strong> 18</p>
+                    <p><strong>Role:</strong> Builder</p>
+                `;
+                enrollmentSchedule.style.display = 'block';
+            } else if (participantId === '012025-01-00103') {
+                accepted = false;
+                message = 'Mohon maaf, Anda belum diterima di Tim Heppy.';
+                details = `
+                    <p><strong>Username Minecraft:</strong> PvPNewbie</p>
+                    <p><strong>Nomor Peserta:</strong> 012025-01-00103</p>
+                    <p><strong>Umur:</strong> 17</p>
+                    <p><strong>Role:</strong> PvP</p>
+                `;
+                enrollmentSchedule.style.display = 'none';
+            } else {
+                accepted = false;
+                message = 'Nomor peserta tidak ditemukan.';
+                details = `
+                    <p>Silakan periksa kembali nomor peserta Anda.</p>
+                    <p>Jika Anda yakin ini adalah kesalahan, silakan hubungi operator.</p>
+                `;
+                enrollmentSchedule.style.display = 'none';
+            }
+            
+            // Update result display
+            resultMessage.textContent = message;
+            resultMessage.style.color = accepted ? 'var(--title-green)' : '#e74c3c';
+            resultMessage.style.fontWeight = 'bold';
+            resultMessage.style.marginBottom = '1.5rem';
+            
+            resultDetails.innerHTML = details;
+            
+            // Show the results
+            privateResultsDisplay.style.display = 'block';
+            
+            // Scroll to results
+            privateResultsDisplay.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Cek remembered user saat load
+        window.addEventListener('DOMContentLoaded', () => {
+            const rememberedUser = localStorage.getItem('rememberedUser');
+            if (rememberedUser) {
+                const userData = JSON.parse(rememberedUser);
+                document.getElementById('login-username').value = userData.username;
+                document.getElementById('login-password').value = userData.password;
+                document.getElementById('remember-me').checked = true;
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Social media links
+        document.getElementById('contact-ig').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Instagram: @heppyminecraftteam');
+        });
+
+        document.getElementById('contact-discord').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Discord: discord.gg/heppymc');
+        });
+
+        // Mobile menu toggle for smaller screens
+        const mobileMenuBtn = document.createElement('button');
+        mobileMenuBtn.className = 'mobile-menu-btn';
+        mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        mobileMenuBtn.style.display = 'none';
+        document.querySelector('header').appendChild(mobileMenuBtn);
+
+        mobileMenuBtn.addEventListener('click', () => {
+            document.getElementById('main-nav').classList.toggle('active');
+        });
+
+        // Handle window resize
+        function handleResize() {
+            if (window.innerWidth <= 768) {
+                mobileMenuBtn.style.display = 'block';
+                document.getElementById('main-nav').classList.remove('active');
+            } else {
+                mobileMenuBtn.style.display = 'none';
+                document.getElementById('main-nav').classList.add('active');
+            }
+        }
+
+        // Initial check
+        handleResize();
+
+        // Add resize listener
+        window.addEventListener('resize', handleResize);
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#main-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    document.getElementById('main-nav').classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
